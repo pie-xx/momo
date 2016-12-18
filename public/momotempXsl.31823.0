@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:include href="lib.xsl"/>
+
+<xsl:template match="/">
+<html>
+<head>
+<title><xsl:value-of select="/momo/prof/author"/>'s <xsl:value-of select="/momo/prof/page"/></title>
+<link rel="alternate" type="application/xml+rss" title="RSS" href="http://momo.railsplayground.net/pie/diary-atom"/>
+<link rel="stylesheet" type="text/css" href="/stylesheets/diary.css"/>
+<style>
+pre { width: 95%; font-family: monospace; font-size: 12px; line-height: 125%; padding: 2px 2px 4px 4px; margin: 4px 0 6px 6px; border-style: dotted dotted dotted dotted; border-width: 1px; word-break:keep-all; word-wrap:break-word; white-space: pre-wrap; } 
+</style>
+</head>
+
+<body>
+<h1><xsl:value-of select="/momo/prof/author"/>'s <xsl:value-of select="/momo/prof/page"/></h1>
+
+<xsl:call-template name="paginate">
+  <xsl:with-param name="tr"><xsl:value-of select="/momo/prof/tr"/></xsl:with-param>
+  <xsl:with-param name="tag"><xsl:value-of select="/momo/prof/tag"/></xsl:with-param>
+</xsl:call-template>
+<table>
+<tr><td><a href="/pie/diary-atom"><img border="0" src="/images/feed.png"/> RSS Feed (atom)</a></td>
+<td>
+<form method="GET" action="/pie/diary">
+  <input type="text" name="tag" size="40">
+    <xsl:attribute name="value"><xsl:value-of select="/momo/prof/tag"/>
+    </xsl:attribute>
+  </input>
+  <input type="submit" value="日記検索"/>
+</form>
+</td></tr>
+</table>
+
+<table>
+<tr>
+<td style="vertical-align:text-top;">
+  <table border="0">
+    <tr><td>▶</td><td><a href="http://picpie.tumblr.com/">tumblr</a></td></tr>
+    <tr><td>▶</td><td><a href="http://d.hatena.ne.jp/pieq/">hatena</a></td></tr>
+    <tr><td colspan="2">
+      <xsl:call-template name="dohhhup">
+      <xsl:with-param name="uid">1144</xsl:with-param>
+      <xsl:with-param name="path">8nLBAm5fw59nr1kUnEzikhdMzLDRNsLj</xsl:with-param>
+      </xsl:call-template>
+      </td>
+    </tr>
+    <tr><td>▶</td><td><a href="/pie/pvlist-sch">Hello Project Music Video List</a></td></tr>
+    <tr><td></td></tr>
+  </table>
+</td>
+<td>
+<div  class="autopagerize_page_element">
+  <xsl:for-each select="/momo/item0">
+      <xsl:call-template name="item0"/>
+  </xsl:for-each>
+</div>
+<div class="autopagerize_insert_before">footer</div>
+</td>
+
+</tr>
+</table>
+
+<xsl:call-template name="paginate">
+  <xsl:with-param name="tr"><xsl:value-of select="/momo/prof/tr"/></xsl:with-param>
+  <xsl:with-param name="tag"><xsl:value-of select="/momo/prof/tag"/></xsl:with-param>
+</xsl:call-template>
+
+</body>
+</html>
+
+</xsl:template>
+
+<xsl:template name="item0">
+  <div class="item0">
+    <h2><xsl:value-of select="@class"/></h2>
+    <xsl:apply-templates />
+  </div>
+</xsl:template>
+
+<xsl:template match="item1">
+  <div class="item1">
+    <a>
+    <xsl:if test="rec/id">
+    <xsl:attribute name="href">/pie/diary-at/<xsl:value-of select="rec/id"/></xsl:attribute>
+    </xsl:if>
+    <xsl:if test="item2/rec/id">
+    <xsl:attribute name="href">/pie/diary-at/<xsl:value-of select="item2/rec/id"/></xsl:attribute>
+    </xsl:if>
+    <h3><xsl:value-of select="substring(rec/c_tag,8,80)"/><xsl:value-of select="@class"/></h3>
+    </a>
+    <dl><dd><xsl:apply-templates />
+    <br clear="all"/>
+    <xsl:for-each select=".//rec">
+      <xsl:sort select="updated_on"/>
+      <xsl:if test="contains(c_class,'[comment]') or contains(c_class,'[tb]')">
+        <xsl:call-template name="diarybox"/>
+        <br clear="all"/>
+      </xsl:if>
+    </xsl:for-each>
+    </dd></dl>
+    <a>
+    <xsl:if test="rec/id">
+    <xsl:attribute name="href">/pie/diary-at/<xsl:value-of select="rec/id"/></xsl:attribute>
+    </xsl:if>
+    <xsl:if test="item2/rec/id">
+    <xsl:attribute name="href">/pie/diary-at/<xsl:value-of select="item2/rec/id"/></xsl:attribute>
+    </xsl:if>
+<img src="/icons/comment_add.png" border="0"/> コメントする</a>
+  </div>
+</xsl:template>
+
+<xsl:template match="item2">
+  <div class="item2">
+  <h4><xsl:value-of select="@class"/></h4>
+  <dl><dd><xsl:apply-templates /></dd></dl>
+  </div>
+</xsl:template>
+
+<xsl:template match="item3">
+  <dl><dd><xsl:apply-templates select="rec"/></dd></dl>
+</xsl:template>
+
+<xsl:template match="rec">
+  <xsl:if test="not( contains(c_class,'[comment]')) and not(contains(c_class,'[tb]'))">
+  <xsl:call-template  name="diarybox"/>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template name="dohhhup">
+  <xsl:param name="uid"/>
+  <xsl:param name="path"/>
+  <object width="240" height="230">
+    <param name="movie">
+      <xsl:attribute name="value">http://www.dohhhup.com/embed/embed.swf?uid=<xsl:value-of select="$uid"/>&amp;path=<xsl:value-of select="$path"/></xsl:attribute>
+    </param>
+    <param name="allowFullScreen" value="true"></param>
+    <embed type="application/x-shockwave-flash" allowfullscreen="true" width="240" height="230">
+      <xsl:attribute name="src">http://www.dohhhup.com/embed/embed.swf?uid=<xsl:value-of select="$uid"/>&amp;path=<xsl:value-of select="$path"/></xsl:attribute>
+    </embed>
+  </object>
+</xsl:template>
+
+</xsl:stylesheet>

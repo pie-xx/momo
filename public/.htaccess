@@ -1,0 +1,13 @@
+Options +FollowSymLinks +ExecCGI
+RewriteEngine On
+
+# Grab anything that is not GET and pass it along to FCGI
+RewriteCond %{REQUEST_METHOD} !GET
+RewriteRule ^(.*)$ dispatch.fcgi [QSA,L]
+
+# This is to find a Rails cached file for GET requests
+RewriteRule ^([^.]+)$ $1.html [QSA]
+
+# And if no cached file exists, pass along to FCGI
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ dispatch.fcgi [QSA,L]

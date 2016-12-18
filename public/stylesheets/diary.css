@@ -1,0 +1,17 @@
+h2 { color: white; background-color:darkred; 
+         padding-left:2em; font-size:16pt; font-weight:bold; margin:4px 0; }
+div.private { margin:0; background-color:lightgreen;}
+div.mobjContainer{ float:left;}
+div.mobjhan { text-decoration:none; color:darkgrey; float:left; vartical-align:top; }
+
+div.leftpart { float:left; margin:0; }
+div.clearpart { float:none; margin:0; }
+div.leftprv { float:left; margin:0; background-color:lightgreen; }
+div.clearprv { float:none; margin:0; background-color:lightgreen; }
+div.mobj_comment {margin:0 0 0.2em 0; padding:0 0 0 10px; background-color:bisque; font-size:small}
+div.[trackback] {margin:0 0 0.2em 0; padding:0 0 0 10px; background-color:lightyellow; font-size:small}
+div.[pic] { margin:0; padding:0; }
+div.item1 { margin:0 0 0 0.8em; }
+a:link, :visited { text-decoration:none; color:black; font-weight:bold; }
+a:hover { text-decoration: underline; color: red; }
+blockquote { background-color: #d3d3d3;}

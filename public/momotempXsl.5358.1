@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+
+<xsl:template match="/">
+<feed xmlns="http://www.w3.org/2005/Atom">
+   <title>pie's diary</title>
+   <link rel="alternate" type="text/html" href="http://m-obj.com/pie/diary" />
+   <link rel="self" type="application/atom+xml" href="http://m-obj.com/pie/diary-atom" />
+<id>tag:momo.railsplayground.net,2008://6</id>
+   <updated><xsl:value-of select="/momo/item0/item1/rec/updated"/></updated>
+   <author>
+      <name>KAJIKAWA, Takafumi (pie)</name>
+   </author>
+   <xsl:for-each select="momo/item0">
+     <xsl:apply-templates />
+   </xsl:for-each>
+</feed>
+
+</xsl:template>
+
+<xsl:template name="entry">
+  <xsl:param name="title"/>
+  <xsl:param name="id"/>
+  <xsl:param name="updated_on"/>
+  <xsl:param name="summary"/>
+  <xsl:param name="content"/>
+
+  <entry xmlns="http://www.w3.org/2005/Atom">
+    <title><xsl:value-of select="$title"/></title>
+    <link rel="alternate" type="text/html">
+     <xsl:attribute name="href">http://m-obj.com/pie/diary-at/<xsl:value-of select="$id"/></xsl:attribute></link>
+    <id><xsl:value-of select="$id"/></id>
+    <published><xsl:value-of select="$updated_on"/></published>
+    <updated><xsl:value-of select="$updated_on"/></updated>
+    <summary><xsl:value-of select="$summary"/></summary>
+    <content type="html" xml:lang="ja" xml:base="http://m-obj.com/">
+      <xsl:value-of select="$content"/>
+    </content>
+  </entry>
+</xsl:template>
+
+<xsl:template match="item2">
+  <xsl:apply-templates />
+</xsl:template>
+
+<xsl:template match="item1">
+  <xsl:if test="(rec[c_class=''])or(item2/rec[c_class=''])" >
+    <entry xmlns="http://www.w3.org/2005/Atom">
+      <title><xsl:value-of select=".//rec[c_class='']/etitle"/></title>
+      <link rel="alternate" type="text/html">
+        <xsl:attribute name="href">http://m-obj.com/pie/diary-at/<xsl:value-of select=".//rec[c_class='']/id"/></xsl:attribute></link>
+      <id><xsl:value-of select=".//rec[c_class='']/id"/></id>
+      <published><xsl:value-of select=".//rec[c_class='']/updated_on"/></published>
+      <updated><xsl:value-of select=".//rec[c_class='']/updated_on"/></updated>
+      <summary><xsl:value-of select="substring(.//rec[c_class='']/c_body,0,80)"/></summary>
+      <content type="html" xml:lang="ja" xml:base="http://m-obj.com/">
+      <xsl:for-each select=".//rec">
+        <xsl:if test="name(..)='item2'">
+          &lt;h3&gt;<xsl:value-of select="../@class"/>&lt;/h3&gt; 
+        </xsl:if>
+        <xsl:if test="not( contains(c_class,'[comment]') or contains(c_class,'[tb]') )" >
+        <xsl:choose>
+        <xsl:when test="contains(c_class,'[pic]')">
+          <xsl:if test="c_body/href">
+          &lt;img src='<xsl:value-of select="c_body/href"/>'/&gt;
+          </xsl:if>
+          <xsl:if test="c_body/id">
+          &lt;img src='http://m-obj.com/momo/get/<xsl:value-of select="c_body/id"/>'/&gt;
+          </xsl:if>
+          &lt;br clear="all"/&gt;
+          <xsl:value-of select="c_body/cap"/>
+          &lt;br clear="all"/&gt;
+        </xsl:when>
+        <xsl:when test="contains(c_class,'image')">
+          &lt;img src='http://m-obj.com/momo/get/<xsl:value-of select="id"/>'/&gt;
+          &lt;br clear="all"/&gt;
+        </xsl:when>
+        <xsl:when test="contains(c_class,'youtube')">
+          &lt;a href='http://jp.youtube.com/watch?v=<xsl:value-of select="c_body"/>'&gt;youtube&lt;/a&gt;
+          &lt;br clear="all"/&gt;
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="c_body"/>
+        </xsl:otherwise>
+        </xsl:choose>
+        </xsl:if>
+      </xsl:for-each>
+      </content>
+    </entry>
+  </xsl:if>
+
+  <xsl:if test="contains( rec/c_class,'[comment]') or contains( rec/c_class,'[tb]')">
+    <xsl:for-each select=".//rec">
+      <xsl:if test="contains( c_class,'[comment]')">
+        <xsl:call-template name="entry">
+          <xsl:with-param name="title">
+            (<xsl:value-of select="c_body/ct"/>)re:<xsl:value-of select="c_index"/>
+          </xsl:with-param>
+          <xsl:with-param name="id"><xsl:value-of select="id"/></xsl:with-param>
+          <xsl:with-param name="updated_on">
+            <xsl:value-of select="updated_on"/>
+          </xsl:with-param>
+          <xsl:with-param name="summary">
+            <xsl:value-of select="substring(c_body/cb,0,80)"/>
+          </xsl:with-param>
+          <xsl:with-param name="content">
+            <xsl:value-of select="c_body/cb"/>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:if>
+      <xsl:if test="contains( c_class,'[tb]')">
+        <xsl:call-template name="entry">
+          <xsl:with-param name="title">
+            [tb]<xsl:value-of select="c_body/title"/> - re:<xsl:value-of select="c_index"/>
+          </xsl:with-param>
+          <xsl:with-param name="id"><xsl:value-of select="id"/>
+          </xsl:with-param>
+          <xsl:with-param name="updated_on"><xsl:value-of select="updated_on"/>
+          </xsl:with-param>
+          <xsl:with-param name="summary">
+            <xsl:value-of select="c_body/blog_name"/>
+          </xsl:with-param>
+        <xsl:with-param name="content">
+          [<xsl:value-of select="c_body/blog_name"/>]
+          <xsl:value-of select="c_body/excerpt"/>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
+
+    </xsl:for-each>
+  </xsl:if>
+
+</xsl:template>
+
+<xsl:template match="item0">
+  <xsl:apply-templates />
+</xsl:template>
+
+</xsl:stylesheet>
