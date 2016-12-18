@@ -1,0 +1,2 @@
+module ScriptbodiesHelper
+end

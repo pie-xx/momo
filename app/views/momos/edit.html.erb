@@ -1,0 +1,12 @@
+<h1>Editing momo</h1>
+
+<% form_for(@momo) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @momo %> |
+<%= link_to 'Back', momos_path %>

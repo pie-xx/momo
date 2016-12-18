@@ -1,0 +1,18 @@
+<%= link_to 'sqlxsl list', sqlxsls_path %> &#x00A0;&#x00A0;<%= link_to 'edit', edit_sqlxsl_path(@sqlxsl) %> 
+<table>
+  <tr>
+    <td><%= @sqlxsl.id %></td>
+    <td colspan="2"><font size="+2"><%= link_to @sqlxsl.author+'/'+@sqlxsl.page, '/'+@sqlxsl.author+'/'+@sqlxsl.page %> </font> <br/>
+    <b><%= h @sqlxsl.sql %></b><br/>
+    <%= h @sqlxsl.defaultv %>
+    </td>
+    <td><%= h @sqlxsl.showto %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><pre><%= h @sqlxsl.xsl %></pre></td>
+    <td><%= link_to 'Destroy', @sqlxsl, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+</table>
+
+<%= link_to 'sqlxsl list', sqlxsls_path %>

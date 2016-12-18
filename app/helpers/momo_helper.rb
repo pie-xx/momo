@@ -1,0 +1,2 @@
+module MomoHelper
+end

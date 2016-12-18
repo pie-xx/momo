@@ -1,0 +1,23 @@
+<h1>Listing scriptbodies</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% for scriptbody in @scriptbodies %>
+  <tr>
+    <td><%= scriptbody.id %></td>
+    <td colspan="2">
+    <b><%= link_to scriptbody.o_name, edit_scriptbody_path(scriptbody) %></b></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><pre><%= h scriptbody.o_body %></pre></td>
+    <td><%= link_to 'Destroy', scriptbody, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New scriptbody', new_scriptbody_path %>

@@ -1,0 +1,40 @@
+<script>
+function deleteThis(){
+    if(confirm('Are you sure?')) {var f = document.createElement('form');f.style.display = 'none';this.parentNode.appendChild(f); f.method = 'GET'; f.action = this.href;var m = document.createElement('input');m.setAttribute('type', 'text');m.setAttribute('name', 'redirect'); m.setAttribute('value', 'sqlxsls'); f.appendChild(m); f.submit(); }; return false;
+}
+</script>
+<h1>Listing sqlxsls</h1>
+
+<%= link_to 'New sqlxsl', new_sqlxsl_path %>
+
+<table>
+  <tr>
+  </tr>
+
+<% for sqlxsl in @sqlxsls %>
+  <tr>
+    <td><%= sqlxsl.id %></td>
+    <td colspan="2">
+    <span style="font-size:24pt;"><%= link_to sqlxsl.author+'/'+sqlxsl.page, '/'+sqlxsl.author+'/'+sqlxsl.page %></span>
+    <span style="font-size:16pt;"><%= link_to 'edit', edit_sqlxsl_path(sqlxsl) %> </span>
+    <span style="font-size:16pt;"><%= link_to 'show', '/sqlxsls/'+sqlxsl.id.to_s %> </span><br/>
+    <b><%= h sqlxsl.sql %></b><br/>
+    <%= h sqlxsl.defaultv %>
+    </td>
+    <td><%= h sqlxsl.showto %></td>
+  </tr>
+  <tr>
+    <td><a href="/sqlxsls/<%= sqlxsl.id %>/copy">Copy</a></td>
+    <td><pre><%= h sqlxsl.xsl[124,300] %>...</pre></td>
+    <td>
+    <a href="/sqlxsls/<%=sqlxsl.id%>/destroy" onclick="deleteThis()">
+          Delete
+    </a>
+</td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New sqlxsl', new_sqlxsl_path %>

@@ -1,0 +1,52 @@
+<h1>Listing momos</h1>
+<!--
+  	id 
+	updated_on
+	created_on
+	c_index
+	c_tag
+	c_status
+	c_type
+	c_ds
+	c_body
+	c_author
+	c_caption
+-->
+<table>
+  <tr>
+    <th>id</th>
+    <th>updated_on</th>
+    <th>created_on</th>
+    <th>c_index</th>
+    <th>c_tag</th>
+    <th>c_status</th>
+    <th>c_type</th>
+    <th>c_ds</th>
+    <th>c_body</th>
+    <th>c_author</th>
+    <th>c_caption</th>
+  </tr>
+
+<% for momo in @momos %>
+  <tr>
+    <td><%= h momo.id  %></td>
+    <td><%= h momo.updated_on %></td>
+    <td><%= h momo.created_on %></td>
+    <td><%= h momo.c_index %></td>
+    <td><%= h momo.c_tag %></td>
+    <td><%= h momo.c_status %></td>
+    <td><%= h momo.c_type %></td>
+    <td><%= h momo.c_ds %></td>
+    <td><%= h momo.c_body %></td>
+    <td><%= h momo.c_author %></td>
+    <td><%= h momo.c_caption %></td>
+    <td><%= link_to 'Show', momo %></td>
+    <td><%= link_to 'Edit', edit_momo_path(momo) %></td>
+    <td><%= link_to 'Destroy', momo, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New momo', new_momo_path %>

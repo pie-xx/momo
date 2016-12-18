@@ -1,0 +1,43 @@
+<h1>Editing sqlxsl</h1>
+
+<% form_for(@sqlxsl) do |f| %>
+  <%= f.error_messages %>
+  <p>
+  author
+  <%= f.text_field :author %>
+  </p>
+  <p>
+  page
+  <%= f.text_field :page %>
+  </p>
+  <p>
+  showto (space delimitter)
+  <%= f.text_field :showto %>
+  </p>
+  <p>
+  sql<br/>
+  <%= f.text_area :sql, :cols=>80, :rows=>10 %>
+  </p>
+  <p>
+  xsl<br/>
+  <%= f.text_area :xsl, :cols=>120, :rows=>24 %>
+  </p>
+  <p>
+  defaultv
+  <%= f.text_field :defaultv, :size=>80 %>
+  </p>
+ <p>
+  st (0:tbl 1:outer)
+  <%= f.text_field :st %>
+  </p>
+  <p>
+  trc_type
+  <%= f.text_field :trc_type, :size=>80 %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @sqlxsl %> |
+<%= link_to 'Back', sqlxsls_path %>
